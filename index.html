@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Kalkulator HPP</title>
+    <meta name="description" content="Hitung modal (HPP) dan harga jual makanan dengan mudah." />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Kalkulator HPP" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="theme-color" content="#f5f2ec" />
+    <script>
+      // Pasang tema sebelum halaman tampil supaya tidak berkedip.
+      ;(function () {
+        try {
+          var t = localStorage.getItem('kalkulator-hpp:theme')
+          if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+        } catch (e) {}
+        var dark =
+          document.documentElement.dataset.theme === 'dark' ||
+          (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches)
+        document.querySelector('meta[name=theme-color]').content = dark ? '#11100e' : '#f5f2ec'
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

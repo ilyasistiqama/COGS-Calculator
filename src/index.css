@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/fraunces';
+
+/* folder mobile/ punya CSS sendiri — jangan ikut di-scan */
+@source not '../mobile';
+
+/*
+ * Palet: gading hangat + tinta gelap + aksen emas.
+ * Otomatis berganti saat HP memakai dark mode.
+ */
+:root {
+  color-scheme: light;
+  --bg: #f5f2ec;
+  --surface: #fffdf9;
+  --sunken: #efebe3;
+  --ink: #1b1915;
+  --ink-soft: #3a362f;
+  --muted: #8b8478;
+  --line: #e6e0d5;
+  --gold: #9c7a45;
+  --gold-soft: #f3ecdf;
+  --on-ink: #f7f3ea;
+  --ok: #2f6b4f;
+  --ok-soft: #e7f0ea;
+  --loss: #a23b2e;
+  --loss-soft: #f7e6e2;
+  --panel: #1b1915;
+  --panel-raise: #2a2722;
+  --on-panel: #f7f3ea;
+  --panel-muted: #a39b8c;
+  --panel-gold: #d9bb88;
+  --panel-ok: #8fcfaa;
+  --panel-loss: #ee9c8e;
+}
+
+/* Gelap: ikut HP (kalau tema "Otomatis"), atau dipaksa lewat data-theme="dark" */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #11100e;
+    --surface: #1a1916;
+    --sunken: #141310;
+    --ink: #f2ede4;
+    --ink-soft: #d9d3c8;
+    --muted: #8f887c;
+    --line: #2b2925;
+    --gold: #d4b483;
+    --gold-soft: #2a2419;
+    --on-ink: #11100e;
+    --ok: #7fbf9c;
+    --ok-soft: #16241d;
+    --loss: #e08b7d;
+    --loss-soft: #2b1714;
+    --panel: #23211d;
+    --panel-raise: #2f2c27;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #11100e;
+  --surface: #1a1916;
+  --sunken: #141310;
+  --ink: #f2ede4;
+  --ink-soft: #d9d3c8;
+  --muted: #8f887c;
+  --line: #2b2925;
+  --gold: #d4b483;
+  --gold-soft: #2a2419;
+  --on-ink: #11100e;
+  --ok: #7fbf9c;
+  --ok-soft: #16241d;
+  --loss: #e08b7d;
+  --loss-soft: #2b1714;
+  --panel: #23211d;
+  --panel-raise: #2f2c27;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-on-ink: var(--on-ink);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-loss: var(--loss);
+  --color-loss-soft: var(--loss-soft);
+  --color-panel: var(--panel);
+  --color-panel-raise: var(--panel-raise);
+  --color-on-panel: var(--on-panel);
+  --color-panel-muted: var(--panel-muted);
+  --color-panel-gold: var(--panel-gold);
+  --color-panel-ok: var(--panel-ok);
+  --color-panel-loss: var(--panel-loss);
+
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-serif: 'Fraunces Variable', Georgia, serif;
+
+  --animate-fade: fade 0.18s ease-out;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+@layer base {
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-bg font-sans text-ink antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  button {
+    cursor: pointer;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold;
+  }
+  ::selection {
+    @apply bg-gold-soft;
+  }
+}
+
+@keyframes overlay {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes sheet {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+@keyframes toast {
+  from {
+    transform: translateY(-12px);
+    opacity: 0;
+  }
+}
