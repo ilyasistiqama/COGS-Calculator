@@ -27,7 +27,8 @@ concurrency:
 jobs:
   apk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # build pertama (tanpa cache) bisa lama; berikutnya lebih cepat berkat cache Gradle
+    timeout-minutes: 120
     defaults:
       run:
         working-directory: mobile
