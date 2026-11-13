@@ -1,4 +1,4 @@
-// Semua rumus HPP. Fungsi murni — bisa dipakai apa adanya di React Native.
+// Semua rumus HPP. Fungsi murni.
 import type { Ingredient, OtherCost, Product } from './types'
 
 export const ROUND_TO = 500

@@ -1,96 +1,79 @@
-# Kalkulator HPP
+# COGS Calculator (Kalkulator HPP)
 
-Hitung modal (HPP) dan harga jual makanan. Tersedia sebagai **web/PWA** dan **aplikasi HP (React Native / Expo)**, dengan logika yang sama.
+A cost-of-goods-sold and pricing calculator for home-based food businesses. It runs entirely in the browser and can be installed on Android and iOS as a Progressive Web App. No account or server is required.
+
+The user interface is in Indonesian.
+
+**Live app:** https://ilyasistiqama.github.io/COGS-Calculator/
+
+## Features
+
+- **Cost per unit and selling price.** Calculates cost from ingredients, per-batch overhead (gas, electricity), per-unit costs (packaging), and batch yield. Suggests a selling price from a target margin, with options rounded to Rp500.
+- **Saved ingredient prices.** Ingredients can optionally be linked to a shared price list. Updating a price recalculates every linked product and shows which ones become unprofitable. Editing an ingredient inside a product switches it to a product-specific price.
+- **Order calculator.** Shows total cost and profit for an order, the number of batches needed, and a shopping list rounded to purchase packs.
+- **Scenarios.** Models the effect of ingredient price increases, computes the break-even quantity, and estimates the quantity needed to reach a profit target.
+- **Sharing.** Generates a price list and order summary that can be sent through WhatsApp.
+- **Backup and restore.** Exports and imports data as JSON. Also includes light and dark themes and offline support.
+
+## Tech stack
+
+- [React 19](https://react.dev/) with TypeScript
+- [Vite](https://vite.dev/) and [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [Lucide](https://lucide.dev/) icons, plus Inter and Fraunces typefaces
+
+## Getting started
+
+Requirements: Node.js 20 or later.
+
+```bash
+npm install
+npm run dev        # start the development server
+npm run lint       # run oxlint
+npm run build      # production build in dist/
+npm run preview    # serve the production build locally
+```
+
+To test on a phone on the same network, run `npm run dev -- --host` and open the printed network URL. Installation and offline support require HTTPS or `localhost`, so use a production build for those.
+
+## Project structure
+
+```
+src/
+├── core/                 Framework-agnostic business logic
+│   ├── hpp.ts              Cost and pricing formulas, input warnings
+│   ├── pantry.ts           Saved ingredient prices and product impact
+│   ├── order.ts            Order totals and shopping list
+│   ├── simulate.ts         Price scenarios, break-even, profit targets
+│   ├── backup.ts           Backup export, validation, and merge
+│   ├── share.ts            Price list and order summary text
+│   ├── format.ts           Indonesian number and currency formatting
+│   ├── storage.ts          Async key-value storage interface
+│   ├── useProducts.ts      State management with autosave
+│   ├── hints.ts            In-app help text
+│   └── types.ts, factory.ts, meta.ts
+└── web/                  Browser UI (components, theme, PWA install)
+```
+
+The modules in `src/core` are pure TypeScript with no DOM dependencies, so they can be reused on other platforms.
+
+## Deployment
+
+On every push to `main`, the `.github/workflows/web.yml` workflow lints the app, builds it, and deploys it to GitHub Pages.
+
+One-time setup: in **Settings → Pages**, set **Source** to **GitHub Actions**.
+
+The build reads its base path from the `BASE_PATH` environment variable, which defaults to `/`. To deploy to any other static host such as Netlify, Vercel, or Cloudflare Pages, run `npm run build` and serve the `dist/` folder.
+
+## Installing on a phone
+
+- **Android (Chrome):** open the app, then tap **⋮ → Add to Home screen**. A prompt may also appear inside the app.
+- **iPhone (Safari):** open the app, then tap **Share → Add to Home Screen**.
+
+## Data and privacy
+
+All data is stored locally in the browser using `localStorage` and is never sent to a server. Because the data stays on one device, use **Backup & restore** regularly. Backup files are named `backup-hpp-YYYY-MM-DD.json` and can be restored on another browser or device.
+
+---
 
 Created by [muis.life](https://muis.life)
-
-## Fitur
-
-- **HPP & harga jual** — bahan, biaya sekali masak / per pcs, jumlah hasil, untung %, pilihan harga bulat
-- **Harga bahan tersimpan** — opsional per bahan; ubah sekali, produk yang memakainya ikut terhitung ulang & kelihatan mana yang jadi rugi. Ubah harga di dalam produk = harga sendiri khusus produk itu
-- **Hitung pesanan** — total modal/untung, berapa kali masak, daftar belanja per kemasan
-- **Simulasi** — kalau bahan naik, balik modal, target untung
-- **Bagikan** — daftar harga & ringkasan pesanan ke WhatsApp
-- **Backup & pulihkan** (file JSON, bisa pindah web ↔ Android), tema terang/gelap, PWA offline
-
-## Struktur
-
-```
-src/core/      ← logika bersama (dipakai web DAN mobile)
-  types.ts       tipe data
-  hpp.ts         rumus HPP + peringatan isian
-  format.ts      format Rupiah, angka Indonesia, tanggal relatif
-  factory.ts     produk/bahan baru + contoh
-  backup.ts      export / import / validasi / gabung backup
-  storage.ts     interface penyimpanan (async)
-  order.ts       kalkulator pesanan + daftar belanja
-  simulate.ts    simulasi harga bahan naik, balik modal, target untung
-  share.ts       teks daftar harga & ringkasan pesanan (WhatsApp)
-  pantry.ts      harga bahan tersimpan (opsional per bahan) + dampak ke produk
-  useProducts.ts hook state + simpan otomatis
-  hints.ts       semua teks bantuan
-  meta.ts        nama app, credit, pilihan tema
-src/web/       ← tampilan web (React DOM + Tailwind v4)
-mobile/        ← aplikasi HP (Expo Router + Uniwind / Tailwind v4)
-  src/app/       layar (index = daftar, product/[id] = edit)
-  src/components komponen UI native
-  src/lib/       AsyncStorage, backup (file + share), tema
-```
-
-Mobile memakai `src/core` langsung lewat alias `@core/*` (lihat `mobile/metro.config.js` dan `mobile/tsconfig.json`) — **jangan di-copy**, cukup edit di satu tempat.
-
-## Deploy otomatis (GitHub Actions)
-
-| Workflow | Kapan jalan | Hasil |
-| --- | --- | --- |
-| `.github/workflows/web.yml` | push ke `main` | Web/PWA di **https://ilyasistiqama.github.io/COGS-Calculator/** |
-| `.github/workflows/android.yml` | push ke `main` yang mengubah `mobile/` atau `src/core/`, atau tag `v*` | File **APK** (tab Actions → run → Artifacts; atau di Releases untuk tag) |
-
-Sekali saja di GitHub: **Settings → Pages → Source: GitHub Actions**.
-
-Rilis APK baru:
-
-```bash
-git tag v1.0.0 && git push origin v1.0.0   # APK muncul di halaman Releases
-```
-
-> APK ditandatangani dengan *debug key* bawaan template — cukup untuk dipasang langsung di HP
-> (izinkan "Instal dari sumber tidak dikenal"). Untuk Play Store perlu keystore sendiri.
-
-## Web / PWA
-
-```bash
-npm install
-npm run dev -- --host   # buka dari HP lewat IP laptop (satu WiFi)
-npm run build           # hasil di dist/ — deploy ke hosting statis (Vercel, Netlify, dll)
-```
-
-PWA (bisa di-install & jalan offline) aktif di hasil build. Install dari HP: buka situsnya → menu browser → **Tambahkan ke layar utama**. Service worker butuh HTTPS (atau localhost).
-
-## Mobile (Expo)
-
-```bash
-cd mobile
-npm install
-npx expo start          # scan QR pakai Expo Go, atau tekan "a" untuk emulator Android
-npm run typecheck
-npm run lint
-```
-
-Build APK di komputer sendiri (perlu Android SDK + JDK 17):
-
-```bash
-cd mobile
-npx expo prebuild --platform android
-cd android && ./gradlew assembleRelease
-# hasil: mobile/android/app/build/outputs/apk/release/app-release.apk
-```
-
-Atau cukup push ke GitHub — workflow `android.yml` yang membangunkan APK-nya.
-
-## Data
-
-- Web: `localStorage` browser. Mobile: `AsyncStorage`.
-- Data hanya ada di perangkat itu — gunakan **Backup & pulihkan** (ikon di kanan atas daftar produk).
-- File backup (`backup-hpp-YYYY-MM-DD.json`) bisa dipulihkan di web maupun aplikasi HP.
-# COGS-Calculator

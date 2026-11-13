@@ -1,4 +1,4 @@
-// Export / import backup. Fungsi murni — dipakai web & React Native.
+// Export / import backup. Fungsi murni.
 import type { Ingredient, OtherCost, PantryItem, Product } from './types'
 import { uid } from './factory'
 

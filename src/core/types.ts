@@ -1,4 +1,4 @@
-// Tipe data murni — tidak tergantung web/React Native.
+// Tipe data murni.
 
 export interface Ingredient {
   id: string

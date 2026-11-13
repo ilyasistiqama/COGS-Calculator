@@ -1,4 +1,4 @@
-// Semua teks bantuan di satu tempat — gampang diedit & dipakai ulang di React Native.
+// Semua teks bantuan di satu tempat — gampang diedit.
 
 export const HINTS = {
   hpp: {

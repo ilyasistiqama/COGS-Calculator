@@ -1,4 +1,4 @@
-// Info aplikasi — dipakai web & React Native.
+// Info aplikasi.
 export const APP_NAME = 'Kalkulator HPP'
 export const CREDIT_LABEL = 'muis.life'
 export const CREDIT_URL = 'https://muis.life'

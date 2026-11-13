@@ -1,6 +1,4 @@
-// Penyimpanan dibuat async supaya di React Native tinggal ganti ke AsyncStorage:
-//   import AsyncStorage from '@react-native-async-storage/async-storage'
-//   export const storage: KeyValueStorage = AsyncStorage
+// Penyimpanan dibuat async supaya gampang diganti ke penyimpanan lain (mis. IndexedDB).
 import type { OrderLine, PantryItem, Product } from './types'
 
 export interface KeyValueStorage {

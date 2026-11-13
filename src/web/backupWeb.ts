@@ -1,4 +1,4 @@
-// Helper file khusus web. Di React Native diganti expo-file-system / expo-sharing / expo-document-picker.
+// Helper file khusus web (unduh, bagikan, pilih file).
 
 export function downloadText(text: string, fileName: string) {
   const blob = new Blob([text], { type: 'application/json' })

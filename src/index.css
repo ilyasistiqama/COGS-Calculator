@@ -2,9 +2,6 @@
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/fraunces';
 
-/* folder mobile/ punya CSS sendiri — jangan ikut di-scan */
-@source not '../mobile';
-
 /*
  * Palet: gading hangat + tinta gelap + aksen emas.
  * Otomatis berganti saat HP memakai dark mode.

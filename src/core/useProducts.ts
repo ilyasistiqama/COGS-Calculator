@@ -1,4 +1,4 @@
-// Hook data utama: produk, harga bahan tersimpan, draf pesanan. Tidak menyentuh DOM — dipakai web & React Native.
+// Hook data utama: produk, harga bahan tersimpan, draf pesanan. Tidak menyentuh DOM.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { OrderLine, PantryItem, Product } from './types'
 import { newProduct, sampleProduct } from './factory'

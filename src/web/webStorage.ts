@@ -1,6 +1,6 @@
 import type { KeyValueStorage } from '../core/storage'
 
-// Versi web dari storage. Di React Native ganti dengan AsyncStorage.
+// Versi web dari storage (localStorage).
 export const webStorage: KeyValueStorage = {
   async getItem(key) {
     try {

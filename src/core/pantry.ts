@@ -2,7 +2,7 @@
 // - Produk memilih per bahan: pakai harga tersimpan, atau harga sendiri.
 // - Ubah harga di halaman Harga bahan → semua produk yang memakainya ikut berubah.
 // - Ubah harga di dalam produk → bahan itu jadi harga sendiri (produk lain tidak tersentuh).
-// Fungsi murni — web & React Native.
+// Fungsi murni.
 import type { Ingredient, PantryItem, Product } from './types'
 import { uid } from './factory'
 import { calculate } from './hpp'
